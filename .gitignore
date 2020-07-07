@@ -1,0 +1,9 @@
+.env
+
+csharp/CustomPrometheusExporter/bin
+csharp/CustomPrometheusExporter/obj
+csharp/CustomPrometheusExporter/Releases
+csharp/CustomPrometheusExporter/.vs/CustomPrometheusExporter
+csharp/CustomPrometheusExporter/.dockerignore
+
+

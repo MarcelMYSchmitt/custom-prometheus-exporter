@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CustomPrometheusExporter": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

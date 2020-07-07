@@ -1,0 +1,31 @@
+version: "3.4"
+
+services:
+  custom-prometheus-exporter-go:
+    image: mrmyiagi/custom-prometheus-exporter-go
+    container_name: custom-prometheus-exporter-go
+    build:
+      context: go
+      dockerfile: Dockerfile
+    ports:
+      - "9010:8080"
+    environment: 
+    - URL=${URL}
+    - USERNAME=${USERNAME}
+    - PASSWORD=${PASSWORD} 
+    restart: unless-stopped
+
+
+  custom-prometheus-exporter-csharp:
+    image: mrmyiagi/custom-prometheus-exporter-csharp
+    container_name: custom-prometheus-exporter-csharp
+    build:
+      context: csharp
+      dockerfile: Dockerfile
+    ports:
+      - "9011:8070"
+    environment: 
+    - URL=${URL}
+    - USERNAME=${USERNAME}
+    - PASSWORD=${PASSWORD} 
+    restart: unless-stopped
