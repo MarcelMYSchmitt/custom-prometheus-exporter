@@ -12,8 +12,8 @@ import (
 
 
 var URL = "SHOULD_NOT_BE_EMPTY"
-var USERNAME = "SHOULD_NOT_BE_EMPTY"
-var PASSWORD = "SHOULD_NOT_BE_EMPTY"
+var CLIENTID = "SHOULD_NOT_BE_EMPTY"
+var CLIENTPASSWORD = "SHOULD_NOT_BE_EMPTY"
 var ENDPOINT_AVAILABILITY = prometheus.NewGauge(prometheus.GaugeOpts{
 	Name: "ENDPOINT_AVAILABILITY", Help: "Shows Availability of Endpoint."})
 
@@ -25,12 +25,12 @@ func init() {
 		URL = URL_env
 	}
 
-	if username_env := os.Getenv("USERNAME"); username_env != "" {
-		USERNAME = username_env
+	if clientid_env := os.Getenv("CLIENTID"); clientid_env != "" {
+		CLIENTID = clientid_env
 	}
 
-    if password_env := os.Getenv("PASSWORD"); password_env != "" {
-		PASSWORD = password_env
+    if clientpassword_env := os.Getenv("CLIENTPASSWORD"); clientpassword_env != "" {
+		CLIENTPASSWORD = clientpassword_env
 	}
 
 	prometheus.MustRegister(ENDPOINT_AVAILABILITY)	
@@ -47,7 +47,7 @@ type Response struct {
 func CallEndpoint() Response {
     client := &http.Client{}
     req, err := http.NewRequest("POST", URL, nil)
-    req.SetBasicAuth(USERNAME, PASSWORD)
+    req.SetBasicAuth(CLIENTID, CLIENTPASSWORD)
 
 	fmt.Println("Calling Endpoint: ", URL)
 	resp, err := client.Do(req)

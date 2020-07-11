@@ -5,8 +5,8 @@ namespace CustomPrometheusExporter
     public class EnvironmentConfiguration
     {
         private const string UriVariableName = "URI";
-        private const string UsernameVariableName = "USERNAME";
-        private const string PasswordVariableName = "PASSWORD";
+        private const string ClientIdVariableName = "CLIENTID";
+        private const string ClientPasswordVariableName = "CLIENTPASSWORD";
 
         /// <summary>
         /// Url of of Endpoint.
@@ -16,20 +16,20 @@ namespace CustomPrometheusExporter
         /// <summary>
         /// ClientId.
         /// </summary>
-        public string Username { get; private set; }
+        public string ClientId { get; private set; }
 
         /// <summary>
         /// ClientSecret.
         /// </summary>
-        public string Password { get; private set; }
+        public string ClientPassword { get; private set; }
 
         public static EnvironmentConfiguration Get()
         {
             return new EnvironmentConfiguration
             {
                 Uri = Environment.GetEnvironmentVariable(UriVariableName) ?? throw new ArgumentException("Uri variable not set!"),
-                Username = Environment.GetEnvironmentVariable(UsernameVariableName) ?? throw new ArgumentException("Username variable not set!"),
-                Password = Environment.GetEnvironmentVariable(PasswordVariableName) ?? throw new ArgumentException("Password variable not set!")
+                ClientId = Environment.GetEnvironmentVariable(ClientIdVariableName) ?? throw new ArgumentException("ClientId variable not set!"),
+                ClientPassword = Environment.GetEnvironmentVariable(ClientPasswordVariableName) ?? throw new ArgumentException("ClientPassword variable not set!")
            };
         }
     }

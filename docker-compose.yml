@@ -11,8 +11,8 @@ services:
       - "9010:8080"
     environment: 
     - URL=${URL}
-    - USERNAME=${USERNAME}
-    - PASSWORD=${PASSWORD} 
+    - CLIENTID=${CLIENTID}
+    - CLIENTPASSWORD=${CLIENTPASSWORD} 
     restart: unless-stopped
 
 
@@ -26,6 +26,21 @@ services:
       - "9011:8070"
     environment: 
     - URL=${URL}
-    - USERNAME=${USERNAME}
-    - PASSWORD=${PASSWORD} 
+    - CLIENTID=${CLIENTID}
+    - CLIENTPASSWORD=${CLIENTPASSWORD} 
+    restart: unless-stopped
+
+
+  custom-prometheus-exporter-java:
+    image: mrmyiagi/custom-prometheus-exporter-java
+    container_name: custom-prometheus-exporter-java
+    build:
+      context: java
+      dockerfile: Dockerfile
+    ports:
+      - "9012:8080"
+    environment: 
+    - URL=${URL}
+    - CLIENTID=${CLIENTID}
+    - CLIENTPASSWORD=${CLIENTPASSWORD} 
     restart: unless-stopped

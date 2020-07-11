@@ -24,7 +24,7 @@ namespace CustomPrometheusExporter
         /// </summary>
         public async Task<HttpResponseMessage> CheckEndpointAvailabilityClientAsync()
         {
-            string authInfo = _environmentConfiguration.Username + ":" + _environmentConfiguration.Password;
+            string authInfo = _environmentConfiguration.ClientId + ":" + _environmentConfiguration.ClientPassword;
             authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
             var request = new HttpRequestMessage(HttpMethod.Post, new Uri(_environmentConfiguration.Uri, UriKind.Absolute));

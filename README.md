@@ -19,14 +19,14 @@ We want to make sure that some endpoints we call are available all the time. If 
 
 ## How to run
 
-We can use the docker-compose file for running the specific exporter. Before using the file we need an `.env` file in which we store our variables: URL, USERNAME, PASSWORD. It's not checked in so make you create it manually before running docker-compose.
+We can use the docker-compose file for running the specific exporter. Before using the file we need an `.env` file in which we store our variables: URL, CLIENTID, CLIENTPASSWORD. It's not checked in so make you create it manually before running docker-compose.
 
 Content of the `.env` file: 
 
 ```
 URL=*url_to_call*
-USERNAME=*client_id*
-PASSWORD=*client_secret*
+CLIENTID=*client_id*
+CLIENTPASSWORD=*client_secret*
 ```
 
 For using the prometheus exporter in go just run: `docker-compose up custom-prometheus-exporter-go`.  
