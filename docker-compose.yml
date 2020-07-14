@@ -44,3 +44,31 @@ services:
     - CLIENTID=${CLIENTID}
     - CLIENTPASSWORD=${CLIENTPASSWORD} 
     restart: unless-stopped
+
+  custom-prometheus-exporter-powershell:
+    image: mrmyiagi/custom-prometheus-exporter-powershell
+    container_name: custom-prometheus-exporter-powershell
+    build:
+      context: powershell
+      dockerfile: Dockerfile
+    ports:
+      - "9013:8080"
+    environment: 
+    - URL=${URL}
+    - CLIENTID=${CLIENTID}
+    - CLIENTPASSWORD=${CLIENTPASSWORD}
+    depends_on: 
+      - prometheus-pushgateway 
+    restart: unless-stopped
+
+  prometheus-pushgateway:
+    image: prom/pushgateway:latest 
+    container_name: prometheus-pushgateway
+    ports:
+      - "9091:9091"
+    restart: unless-stopped    
+
+networks:
+  default:
+    external:
+      name: custom-prometheus-exporter
