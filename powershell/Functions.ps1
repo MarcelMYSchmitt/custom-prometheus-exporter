@@ -69,7 +69,7 @@ Function MetricBuilder($MetricName, $MetricValue) {
     }
     process {
         try {
-            $result = "{0}{{host=`"{1}`", instance=`"{2}`"}} {3}`n" -f @($MetricName, $hostname, $instanceName, $MetricValue)
+            $result = "{0}{{host=`"{1}`",instance=`"{2}`"}} {3}`n" -f @($MetricName, $hostname, $instanceName, $MetricValue)
             $null = $results.Append($result)
         }
         catch {

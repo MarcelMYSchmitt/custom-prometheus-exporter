@@ -51,8 +51,20 @@ services:
     build:
       context: powershell
       dockerfile: Dockerfile
-    ports:
-      - "9013:8080"
+    environment: 
+    - URL=${URL}
+    - CLIENTID=${CLIENTID}
+    - CLIENTPASSWORD=${CLIENTPASSWORD}
+    depends_on: 
+      - prometheus-pushgateway 
+    restart: unless-stopped
+
+  custom-prometheus-exporter-php:
+    image: mrmyiagi/custom-prometheus-exporter-php
+    container_name: custom-prometheus-exporter-php
+    build:
+      context: php
+      dockerfile: Dockerfile
     environment: 
     - URL=${URL}
     - CLIENTID=${CLIENTID}

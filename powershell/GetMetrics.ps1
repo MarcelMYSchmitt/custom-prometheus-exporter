@@ -29,7 +29,7 @@ try {
 
     while ($true) {
             
-        #get all metrics from the app(s) in space(s) and send them to pushgateway
+        #get metric and send it to pushgateway
         GetAndSendMetrics -URL $URL -CLIENTID $CLIENTID -CLIENTPASSWORD $CLIENTPASSWORD
            
         #send status code for running script

@@ -40,9 +40,10 @@ If you make a change in code use the `--build` parameter: `docker-compose up --b
 - java
 - go
 - powershell 
+- php
 
 ## To DO
-Extend Readme and add more exporter (powershell not finished yet).
+Extend Readme and add more exporter (php not finished yet).
 
 
 
