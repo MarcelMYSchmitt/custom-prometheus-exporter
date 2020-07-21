@@ -46,16 +46,21 @@ $options = array(
 while (1) {
 
     try {
+
+        #call endpoint
         $context  = stream_context_create($options);
         $resultJson = file_get_contents($URL, false, $context);
         if ($resultJson === FALSE) { 
         }
         
         echo $resultJson;
+
+        #parse
         $resultObject = json_decode($resultJson);
         
         echo "\n";
         
+        #check
         $accessToken = $resultObject -> access_token;
         $tokenType = $resultObject -> token_type;
         $expiresIn = $resultObject -> expires_in;
@@ -71,22 +76,26 @@ while (1) {
             $endpointAvailabilityStatus = 1;
         } 
 
+       #endpoint status
        $endpointAvailabilityMetric = $endpointAvailabilityMetricName." ".$endpointAvailabilityStatus;
        exec("echo $endpointAvailabilityMetric | curl --data-binary @- $pushGatewayFullUrl");
 
        echo "\n";
 
+       #script status
        $metricsScriptStatus = 1;
        $metricsScriptStatusMetric = $metricsScriptStatusMetricName." ".$metricsScriptStatus;
        exec("echo $metricsScriptStatusMetric | curl --data-binary @- $pushGatewayFullUrl");
 
        echo "\n";
 
+       #wait 10 seconds 
        sleep(10);
 
     } catch (Exception $e) {
         echo 'Exception abgefangen: ',  $e->getMessage(), "\n";
 
+        #set script status to 0 for exception
         $metricsScriptStatus = 0;
         $metricsScriptStatusMetric = $metricsScriptStatusMetricName." ".$metricsScriptStatus;
         exec("echo $endpointAvailabilityMetric | curl --data-binary @- $pushGatewayFullUrl");
@@ -95,7 +104,5 @@ while (1) {
 
     }
 }
-
-
 
 ?>

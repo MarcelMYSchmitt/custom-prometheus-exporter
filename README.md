@@ -43,7 +43,4 @@ If you make a change in code use the `--build` parameter: `docker-compose up --b
 - php
 
 ## To DO
-Extend Readme and add more exporter (php not finished yet).
-
-
-
+Extend Readme and add more exporter (php not finished yet, nodejs and deno still open).
