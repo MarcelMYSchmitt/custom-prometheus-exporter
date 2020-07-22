@@ -50,32 +50,37 @@ while (1) {
         #call endpoint
         $context  = stream_context_create($options);
         $resultJson = file_get_contents($URL, false, $context);
+        
         if ($resultJson === FALSE) { 
+            echo "\n";
+            $endpointAvailabilityStatus = 0;           
+        } else {
+
+            echo $resultJson;
+
+            #parse
+            $resultObject = json_decode($resultJson);
+            
+            echo "\n";
+            
+            #check
+            $accessToken = $resultObject -> access_token;
+            $tokenType = $resultObject -> token_type;
+            $expiresIn = $resultObject -> expires_in;
+            
+            if ($accessToken && $tokenType && $expiresIn) {
+                echo "AccessToken: $accessToken";
+                echo "\n";
+                echo "TokenType: $tokenType";
+                echo "\n";
+                echo "ExpiresIn: $expiresIn";    
+                echo "\n";
+    
+                $endpointAvailabilityStatus = 1;
+            } 
+    
         }
         
-        echo $resultJson;
-
-        #parse
-        $resultObject = json_decode($resultJson);
-        
-        echo "\n";
-        
-        #check
-        $accessToken = $resultObject -> access_token;
-        $tokenType = $resultObject -> token_type;
-        $expiresIn = $resultObject -> expires_in;
-        
-        if ($accessToken && $tokenType && $expiresIn) {
-            echo "AccessToken: $accessToken";
-            echo "\n";
-            echo "TokenType: $tokenType";
-            echo "\n";
-            echo "ExpiresIn: $expiresIn";    
-            echo "\n";
-
-            $endpointAvailabilityStatus = 1;
-        } 
-
        #endpoint status
        $endpointAvailabilityMetric = $endpointAvailabilityMetricName." ".$endpointAvailabilityStatus;
        exec("echo $endpointAvailabilityMetric | curl --data-binary @- $pushGatewayFullUrl");
@@ -101,7 +106,6 @@ while (1) {
         exec("echo $endpointAvailabilityMetric | curl --data-binary @- $pushGatewayFullUrl");
 
         exit;
-
     }
 }
 
