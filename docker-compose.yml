@@ -45,6 +45,23 @@ services:
     - CLIENTPASSWORD=${CLIENTPASSWORD} 
     restart: unless-stopped
 
+
+  custom-prometheus-exporter-nodejs:
+    image: mrmyiagi/custom-prometheus-exporter-nodejs
+    container_name: custom-prometheus-exporter-nodejs
+    build:
+      context: nodejs
+      dockerfile: Dockerfile
+    ports:
+      - "9013:8080"
+      - "3001:3001"
+    environment: 
+    - URL=${URL}
+    - CLIENTID=${CLIENTID}
+    - CLIENTPASSWORD=${CLIENTPASSWORD}
+    restart: unless-stopped
+
+
   custom-prometheus-exporter-powershell:
     image: mrmyiagi/custom-prometheus-exporter-powershell
     container_name: custom-prometheus-exporter-powershell
@@ -58,6 +75,7 @@ services:
     depends_on: 
       - prometheus-pushgateway 
     restart: unless-stopped
+
 
   custom-prometheus-exporter-php:
     image: mrmyiagi/custom-prometheus-exporter-php
@@ -73,12 +91,14 @@ services:
       - prometheus-pushgateway 
     restart: unless-stopped
 
+
   prometheus-pushgateway:
     image: prom/pushgateway:latest 
     container_name: prometheus-pushgateway
     ports:
       - "9091:9091"
     restart: unless-stopped    
+
 
 networks:
   default:

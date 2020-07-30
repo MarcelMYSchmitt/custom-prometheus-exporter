@@ -6,4 +6,8 @@ csharp/CustomPrometheusExporter/Releases
 csharp/CustomPrometheusExporter/.vs/CustomPrometheusExporter
 csharp/.dockerignore
 
+nodejs/node_modules/
+nodejs/package-lock.json
+
+
 

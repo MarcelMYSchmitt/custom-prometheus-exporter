@@ -41,6 +41,7 @@ If you make a change in code use the `--build` parameter: `docker-compose up --b
 - go
 - powershell 
 - php
+- nodejs
 
 ## To DO
-Extend Readme and add more exporter (php not finished yet, nodejs and deno still open).
+Extend Readme and add more exporter (deno still open).
