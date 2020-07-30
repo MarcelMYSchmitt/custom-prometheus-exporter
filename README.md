@@ -44,4 +44,4 @@ If you make a change in code use the `--build` parameter: `docker-compose up --b
 - nodejs
 
 ## To DO
-Extend Readme and add more exporter (deno still open).
+Extend Readme and add more exporter (deno not finished yet).
