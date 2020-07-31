@@ -62,6 +62,21 @@ services:
     restart: unless-stopped
 
 
+  custom-prometheus-exporter-deno:
+    image: mrmyiagi/custom-prometheus-exporter-deno
+    container_name: custom-prometheus-exporter-deno
+    build:
+      context: deno
+      dockerfile: Dockerfile
+    ports:
+      - "9014:8080"
+    environment: 
+    - URL=${URL}
+    - CLIENTID=${CLIENTID}
+    - CLIENTPASSWORD=${CLIENTPASSWORD}      
+    restart: unless-stopped
+
+
   custom-prometheus-exporter-powershell:
     image: mrmyiagi/custom-prometheus-exporter-powershell
     container_name: custom-prometheus-exporter-powershell

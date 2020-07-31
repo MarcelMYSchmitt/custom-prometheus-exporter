@@ -6,4 +6,4 @@ USER deno
 ADD . .
 RUN deno cache index.ts
 
-CMD ["run", "--allow-net", "index.ts"]
+CMD ["run", "--allow-net", "--allow-read", "--allow-env", "index.ts"]
