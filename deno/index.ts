@@ -1,8 +1,10 @@
 import { Gauge, Registry } from "https://deno.land/x/ts_prometheus/mod.ts";
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 import { soxa } from 'https://deno.land/x/soxa/mod.ts'
+import { delay } from "https://deno.land/std@0.63.0/async/delay.ts";
+
 import "https://deno.land/x/dotenv/load.ts";
-import "https://deno.land/x/newdash/sleep.ts";
+
 
 const URL = Deno.env.get('URL');
 CheckEnvironmentVariable('URL', URL);
@@ -22,22 +24,20 @@ function CheckEnvironmentVariable(parameterName: any, parameterValue: any) {
 }
 
 
+// Prometheus Metrics
 const gauge = Gauge.with({
     name: 'ENDPOINT_AVAILABILITY',
     help: 'Shows availability of endpoint.',
     labels: ['mode'],
 });
 
-const app = new Application();
 
+// Metric Server
+const app = new Application();
 const router = new Router();
 router
     .get("/hello", (ctx) => {
         ctx.response.body = "Hello world!";
-    })
-    .get("/hello/:name", (ctx) => {
-        const { params } = ctx;
-        ctx.response.body = `Hello, ${params.name}!`;
     })
     .get("/metrics", (ctx) => {
         ctx.response.headers.set("Content-Type", "");
@@ -50,9 +50,10 @@ app.use(async (ctx, next) => {
 
 app.use(router.routes());
 
-//while (1) {
+while (1) {
     gauge.set(1);
     try {
+        
         let response = await soxa.post(`${URL}`, {}, {
             auth: {
                 username: `${CLIENTID}`,
@@ -61,14 +62,31 @@ app.use(router.routes());
 
         });
 
-        console.log(response);
-        console.log(response.body);
+        const stringified = JSON.stringify(response.data);
+        console.log(stringified);
+
+        let jsonObjet = JSON.parse(stringified);
+        let accessToken = jsonObjet.access_token;
+        let tokenType = jsonObjet.token_type;
+        let expiresIn =  jsonObjet.expires_in;
+
+        if (accessToken && tokenType && expiresIn) {
+            console.log(accessToken);
+            console.log(tokenType);
+            console.log(expiresIn);
+
+            console.log("Set endpoint availabilty metric to 1.")
+            gauge.set(1);
+        }
     } catch {
-        console.log("something went wrong");
+        console.log("Something went wrong, set endpont availabilty metric to 0.");
         gauge.set(0);
     }
 
-    //sleep(10000);
-//}
+    // wait 10 seconds for another request
+    await delay(10000);
+}
 
-await app.listen({ port: 8080 });
+
+// expose port
+await app.listen({ port: 8080 });   
