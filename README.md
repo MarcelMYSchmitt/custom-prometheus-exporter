@@ -47,3 +47,9 @@ Used languages at the moment:
 - php
 - nodejs
 - deno
+
+----
+
+## Info
+
+Project is not maintained regulary. Especially concerning Deno there can be some changes because of used dependencies (prometheus client). Also for other projects its not sure that every dependency will work.

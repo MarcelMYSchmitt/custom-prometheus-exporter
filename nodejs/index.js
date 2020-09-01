@@ -138,7 +138,7 @@ function CallEndpointAndSetAvailabilityMetric() {
     );
   } catch{
 
-    console("Set Status of Metric to 0");
+    console.log("Set Status of Metric to 0");
 
     gauge.set(0);
   }
