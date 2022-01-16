@@ -47,6 +47,7 @@ Used languages at the moment:
 - php
 - nodejs
 - deno
+- python
 
 ----
 

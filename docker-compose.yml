@@ -76,6 +76,22 @@ services:
     - CLIENTPASSWORD=${CLIENTPASSWORD}      
     restart: unless-stopped
 
+    
+  custom-prometheus-exporter-python:
+    image: mrmyiagi/custom-prometheus-exporter-python
+    container_name: custom-prometheus-exporter-python
+    build:
+      context: python
+      dockerfile: Dockerfile
+    ports:
+      - "9877:9877"
+      - "8082:8082"
+    environment: 
+    - URL=${URL}
+    - CLIENTID=${CLIENTID}
+    - CLIENTPASSWORD=${CLIENTPASSWORD}
+    restart: unless-stopped
+
 
   custom-prometheus-exporter-powershell:
     image: mrmyiagi/custom-prometheus-exporter-powershell
